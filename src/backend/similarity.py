@@ -38,7 +38,7 @@ try:
     nltk.data.find("corpora/stopwords")
 except LookupError:
     nltk.download("stopwords", quiet=True)
-    
+
 # Hugging Face API details
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 API_URL = "https://api-inference.huggingface.co/models/BAAI/bge-large-en-v1.5"
@@ -153,6 +153,9 @@ class SemanticSimilarity:
 
             # Cosine similarity (same as normalized dot product)
             score = np.dot(emb1, emb2)
+
+            # Clamp negative values to 0
+            score = max(0.0, score)
 
             score = round(float(score), 4)
 

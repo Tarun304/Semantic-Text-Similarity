@@ -113,10 +113,10 @@ python -m spacy download en_core_web_sm
 uvicorn src.api.app:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Production Mode
+### Production Mode (Render)
 
 ```bash
-uvicorn src.api.app:app --host 0.0.0.0 --port 8000
+uvicorn src.api.app:app --host 0.0.0.0 --port $PORT
 ```
 
 The API will be available at:
@@ -126,7 +126,7 @@ The API will be available at:
 
 ## 📚 API Documentation
 
-### Base URL
+### Base URL(Local Development)
 ```
 http://localhost:8000/api
 ```
@@ -239,7 +239,7 @@ This project is configured for easy deployment on Render:
 | Variable | Description | Required |
 |----------|-------------|----------|
 | `HUGGINGFACEHUB_API_TOKEN` | Hugging Face API token for model access | Yes |
-| `PORT` | Port number (set automatically by Render) | No |
+| `PYTHON_VERSION` | Set the python version (3.11.9)  | Yes|
 
 ### Deployment Files
 
