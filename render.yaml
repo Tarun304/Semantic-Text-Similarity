@@ -2,10 +2,10 @@ services:
   - type: web
     name: text-similarity-api
     env: python
+    plan: free
     buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn src.api.app:app --host 0.0.0.0 --port $PORT"
-    plan: free
-    pythonVersion: "3.11.9"
+    pythonVersion: 3.11.9
     envVars:
       - key: HUGGINGFACEHUB_API_TOKEN
         sync: false
