@@ -9,22 +9,36 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from dotenv import load_dotenv
 from src.utils.logger import logger
+import ssl
+
 
 # Load env vars (Hugging Face token)
 load_dotenv()
 
-# Check for punkt
+# SSL fix for NLTK downloads on cloud platforms
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+# Download NLTK resources (happens once per deployment)
+try:
+    nltk.data.find("tokenizers/punkt_tab")
+except LookupError:
+    nltk.download("punkt_tab", quiet=True)
+    
 try:
     nltk.data.find("tokenizers/punkt")
 except LookupError:
     nltk.download("punkt", quiet=True)
-
-# Check for stopwords
+    
 try:
     nltk.data.find("corpora/stopwords")
 except LookupError:
     nltk.download("stopwords", quiet=True)
-
+    
 # Hugging Face API details
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 API_URL = "https://api-inference.huggingface.co/models/BAAI/bge-large-en-v1.5"
